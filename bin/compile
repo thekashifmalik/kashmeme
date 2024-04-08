@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+solc --abi --bin KashMeme.sol --include-path node_modules/ --base-path . -o build

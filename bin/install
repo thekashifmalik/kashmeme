@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+. ~/.nvm/nvm.sh && nvm use
+npm install -g yarn
+yarn install
