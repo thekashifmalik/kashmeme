@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+import { ethers } from "ethers";
+import fs from "fs"
+import dotenv from "dotenv"
+
+dotenv.config();
+
+const abiRaw = fs.readFileSync("build/KashMeme.abi").toString()
+const abi = JSON.parse(abiRaw);
+const bytecode = fs.readFileSync("build/KashMeme.bin").toString();
+
+const provider = new ethers.JsonRpcProvider(process.env.RPC_NODE);
+const signer = new ethers.Wallet(process.env.SIGNER_PRIVATE_KEY, provider);
+const factory = new ethers.ContractFactory(abi, bytecode, signer);
+
+const contract = await factory.deploy();
+const address = await contract.getAddress();
+console.log("Deploying to address:", address);
+const value = await contract.waitForDeployment()
+console.log(value);
